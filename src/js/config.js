@@ -1,1 +1,2 @@
-export const fps = 60;
+export const FPS = 60;
+export const BGCOLOR = '#d0eed5';

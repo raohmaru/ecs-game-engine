@@ -8,6 +8,10 @@ export default class Entity {
 		this.components = new Map();
 		this.componentsMask = 0;
 	}
+	
+	get mask() {
+		return this.componentsMask
+	}
 
 	addComponents(...components) {
 		components.forEach((component) => {
@@ -31,7 +35,7 @@ export default class Entity {
 		return this.components.has(getComponentId(component));
 	}
 
-	getComponent(Component) {
+	getComponent(component) {
 		return this.components.get(getComponentId(component));
 	}
 }

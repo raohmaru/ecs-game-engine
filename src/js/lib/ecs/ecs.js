@@ -47,7 +47,7 @@ export default {
 	registerComponents,
 	createEntity,
 	getEntity,
-	getEntitiesByComponents,
+	getEntitiesByComponentsMask,
 	addSystems,
 	update
 };
