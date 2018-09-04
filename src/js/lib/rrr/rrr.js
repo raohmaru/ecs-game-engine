@@ -1,22 +1,27 @@
 import CONST from './rrr-const.js';
 import CanvasRenderer from './rrr-2d.js';
 
+	
+const createRenderer = (type, view) => {
+	if(type === CONST.CANVAS) {
+		return new CanvasRenderer(view);
+	}
+}
+
 class Rrr {
 	constructor(view, rendererType = 0, bgcolor) {
 		this.view = view;
 		this.bgcolor = bgcolor;
-		this.createRenderer(rendererType);
+		this.renderer = createRenderer(rendererType, view);
 		this.sprites = new WeakSet();
 		this.layers = [];
 	}
 	
-	createRenderer(type) {
-		if(type === CONST.CANVAS) {
-			this.renderer = new CanvasRenderer(this.view);
-		}
+	get world() {
+		return this.view;
 	}
 	
-	addSprite(sprite, layer) {
+	addSprite(sprite, layer = 0) {
 		sprite.layer = layer;
 		this.sprites.add(sprite)
 		if(!this.layers[layer]) {

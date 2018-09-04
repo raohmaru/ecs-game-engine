@@ -1,7 +1,5 @@
 let currentId = 1;
 
-const getComponentId = (component) => component.id || component.constructor.id || component;
-
 export default class Entity {
 	constructor(id) {
 		this.id = id || (currentId++).toString(36);
@@ -10,7 +8,7 @@ export default class Entity {
 	}
 	
 	get mask() {
-		return this.componentsMask
+		return this.componentsMask;
 	}
 
 	addComponents(...components) {
@@ -22,7 +20,7 @@ export default class Entity {
 
 	removeComponents(...components) {
 		components.forEach((component) => {
-			const entityComponent = this.getComponent(component);
+			const entityComponent = this.components.get(component);
 
 			if (entityComponent) {
 				this.components.delete(entityComponent.constructor.id);
@@ -32,10 +30,10 @@ export default class Entity {
 	}
 
 	hasComponent(component) {
-		return this.components.has(getComponentId(component));
+		return this.components.has(component);
 	}
 
 	getComponent(component) {
-		return this.components.get(getComponentId(component));
+		return this.components.get(component);
 	}
 }
