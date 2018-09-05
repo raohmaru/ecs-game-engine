@@ -1,7 +1,7 @@
 # Offline Pizza Delivery
 A browser game for the JavaScript code competition [Js13kGames](https://js13kgames.com/).
 
-[Play it now!]()
+[Play it now!](https://raohmaru.github.io/offline-pizza-delivery/src/)
 
 ## Getting Started
 
