@@ -1,10 +1,6 @@
-import * as cfg  from './config.js';
-import * as env  from './env.js';
-import * as _    from './lib/util.js';
+import cfg       from './config.js';
 import $         from './lib/dom.js';
-import Beat      from './lib/beat.js';
-import ecs       from './lib/ecs/ecs.js';
-import Rrr       from './lib/rrr/rrr.js';
+import Game      from './lib/core/game.js';
 import Movement  from './systems/movement.js';
 import Render    from './systems/render.js';
 import Position  from './components/position.js';
@@ -12,38 +8,36 @@ import Velocity  from './components/velocity.js';
 import Sprite    from './components/sprite.js';
 
 // variables
-let beat;
-let renderer;
-let $statistics = $('#statistics');
+let game;
+const $statistics = $('#statistics');
 	
 function init() {
-	beat = new Beat(cfg.FPS, frame);
-	beat.start();
+	game = new Game(cfg, {render});
 	
-	ecs.registerComponents(
+	game.ecs.registerComponents(
 		Position,
 		Velocity,
 		Sprite
 	);
 	
-	ecs.createEntity('player')
+	game.ecs.addSystems(
+		new Movement(game),
+		new Render(game)
+	);
+	
+	const player = game.ecs
+		.createEntity('player')
 		.addComponents(
 			new Position(0, 0),
 			new Velocity(10, 0),
 			new Sprite(createSprite())
-		);
+		);	
+	game.addSprite(player, 0);
 	
-	renderer = new Rrr($('#world'), Rrr.CANVAS, cfg.BGCOLOR);
-	renderer.addSprite(ecs.getEntity('player').getComponent('Sprite'), 0);
-	
-	ecs.addSystems(
-		new Movement(ecs, renderer.world),
-		new Render(ecs, renderer)
-	);
+	game.start();
 }
 
-function frame(delta) {
-	ecs.update(delta);
+function render(delta) {
 	$statistics.textContent = 1000 / delta;
 }
 

@@ -1,7 +1,7 @@
 export default class Movement {
-	constructor(ecs, world) {
-		this.group = ecs.getEntitiesByComponents('Position', 'Velocity', 'Sprite');
-		this.world = world;
+	constructor(game) {
+		this.group = game.ecs.getEntitiesByComponents('Position', 'Velocity', 'Sprite');
+		this.world = game.renderer.view;
 	}
 
 	update() {

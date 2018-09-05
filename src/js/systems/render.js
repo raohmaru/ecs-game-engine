@@ -1,7 +1,7 @@
 export default class Render {
-	constructor(ecs, renderer) {
-		this.renderer = renderer;
-		this.group = ecs.getEntitiesByComponents('Position', 'Sprite');
+	constructor(game) {
+		this.renderer = game.renderer;
+		this.group = game.ecs.getEntitiesByComponents('Position', 'Sprite');
 	}
 
 	update() {

@@ -1,2 +1,8 @@
-export const FPS = 60;
-export const BGCOLOR = '#d0eed5';
+import $ from './lib/dom.js';
+
+export default {
+	canvas: $('#world'),
+	fps: 60,
+	renderer: 'canvas',
+	canvasColor: '#d0eed5'
+}

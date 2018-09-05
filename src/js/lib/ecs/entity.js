@@ -1,21 +1,21 @@
+import ecs from './ecs.js';
+
 let currentId = 1;
 
 export default class Entity {
 	constructor(id) {
 		this.id = id || (currentId++).toString(36);
 		this.components = new Map();
-		this.componentsMask = 0;
-	}
-	
-	get mask() {
-		return this.componentsMask;
+		this.mask = 0;
 	}
 
 	addComponents(...components) {
 		components.forEach((component) => {
 			this.components.set(component.constructor.id, component);
-			this.componentsMask |= component.constructor.mask;
+			this.mask |= component.constructor.mask;
 		});
+		ecs.updateGroups(this);
+		return this;
 	}
 
 	removeComponents(...components) {
@@ -24,9 +24,10 @@ export default class Entity {
 
 			if (entityComponent) {
 				this.components.delete(entityComponent.constructor.id);
-				this.componentsMask &= ~entityComponent.constructor.mask;
+				this.mask &= ~entityComponent.constructor.mask;
 			}
 		});
+		return this;
 	}
 
 	hasComponent(component) {

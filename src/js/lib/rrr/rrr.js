@@ -2,23 +2,23 @@ import CONST from './rrr-const.js';
 import CanvasRenderer from './rrr-2d.js';
 
 	
-const createRenderer = (type, view) => {
+const createRenderer = (type, canvas) => {
 	if(type === CONST.CANVAS) {
-		return new CanvasRenderer(view);
+		return new CanvasRenderer(canvas);
 	}
 }
 
 class Rrr {
-	constructor(view, rendererType = 0, bgcolor) {
-		this.view = view;
-		this.bgcolor = bgcolor;
-		this.renderer = createRenderer(rendererType, view);
+	constructor(canvas, rendererType, canvasColor) {
+		this.canvas = canvas;
+		this.canvasColor = canvasColor;
+		this.renderer = createRenderer(rendererType, canvas);
 		this.sprites = new WeakSet();
 		this.layers = [];
 	}
 	
-	get world() {
-		return this.view;
+	get view() {
+		return this.canvas;
 	}
 	
 	addSprite(sprite, layer = 0) {
@@ -31,7 +31,7 @@ class Rrr {
 	}
 
 	render() {
-		this.renderer.prepare(this.bgcolor);
+		this.renderer.prepare(this.canvasColor);
 		
 		this.layers.forEach( (layer) => {
 			for (let sprite of layer) {

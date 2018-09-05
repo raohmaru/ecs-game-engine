@@ -1,3 +1,3 @@
 export default {
-	CANVAS: 0
+	CANVAS: 'canvas'
 };

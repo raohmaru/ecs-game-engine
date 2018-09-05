@@ -4,11 +4,9 @@ export default class Group {
 		this.entities = new Set();
 	}
 	
-	match(entities) {
-		for (let entity of entities.values()) {
-			if(this.mask & entity.mask) {
-				this.entities.add(entity);
-			}
+	match(entity) {
+		if((this.mask & entity.mask) === this.mask) {
+			this.entities.add(entity);
 		}
 	}
 }

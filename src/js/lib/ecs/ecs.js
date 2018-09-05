@@ -10,9 +10,9 @@ const compId = Symbol('_id');  // Unique object, used as identifier
 let bitMask = 0;
 
 const getMask = (comps) => {
-	return comps.reduce( (acc, cur) => {
-		if(components.has(cur)) {
-			return acc | components.get(cur).mask;
+	return comps.reduce( (acc, compId) => {
+		if(components.has(compId)) {
+			return acc | components.get(compId).mask;
 		}
 		return 0;
 	}, 0);
@@ -42,7 +42,7 @@ export default {
 		}
 
 		entity = new Entity(id);
-		entities.set(id, entity);
+		entities.set(id, entity);		
 		return entity;
 	},
 	
@@ -58,9 +58,17 @@ export default {
 		}
 		
 		const group = new Group(mask);
-		group.match(entities);
+		for (let entity of entities.values()) {
+			group.match(entity);
+		}
 		groups.set(mask, group);
 		return group;
+	},
+	
+	updateGroups(entity) {
+		for (let group of groups.values()) {
+			group.match(entity);
+		}
 	},
 	
 	addSystems(...sys) {
