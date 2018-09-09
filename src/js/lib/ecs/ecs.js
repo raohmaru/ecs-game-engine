@@ -9,6 +9,14 @@ const compId = Symbol('_id');  // Unique object, used as identifier
 
 let bitMask = 0;
 
+const Entity_addComponents_handler = {
+    apply: function(target, thisArg, argumentsList) {
+        target.apply(thisArg, argumentsList);
+		updateGroups(thisArg);
+		return thisArg;
+    }
+};
+
 const getMask = (comps) => {
 	return comps.reduce( (acc, compId) => {
 		if(components.has(compId)) {
@@ -16,7 +24,13 @@ const getMask = (comps) => {
 		}
 		return 0;
 	}, 0);
-}
+};
+	
+const updateGroups = (entity) => {
+	for (let group of groups.values()) {
+		group.match(entity);
+	}
+};
 
 export default {
 	registerComponents(...comps) {
@@ -42,7 +56,8 @@ export default {
 		}
 
 		entity = new Entity(id);
-		entities.set(id, entity);		
+		entities.set(id, entity);
+		entity.addComponents = new Proxy(entity.addComponents, Entity_addComponents_handler);
 		return entity;
 	},
 	
@@ -63,12 +78,6 @@ export default {
 		}
 		groups.set(mask, group);
 		return group;
-	},
-	
-	updateGroups(entity) {
-		for (let group of groups.values()) {
-			group.match(entity);
-		}
 	},
 	
 	addSystems(...sys) {

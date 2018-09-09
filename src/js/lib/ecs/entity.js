@@ -1,5 +1,3 @@
-import ecs from './ecs.js';
-
 let currentId = 1;
 
 export default class Entity {
@@ -14,7 +12,7 @@ export default class Entity {
 			this.components.set(component.constructor.id, component);
 			this.mask |= component.constructor.mask;
 		});
-		ecs.updateGroups(this);
+		
 		return this;
 	}
 
