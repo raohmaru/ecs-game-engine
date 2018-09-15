@@ -2,15 +2,19 @@ let currentId = 1;
 
 export default class Entity {
 	constructor(id) {
-		this.id = id || (currentId++).toString(36);
-		this.components = new Map();
-		this.mask = 0;
+		this._id = id || (currentId++).toString(36);
+		this._components = new Map();
+		this._mask = 0;
+	}
+	
+	get mask() {
+		return this._mask;
 	}
 
 	addComponents(...components) {
 		components.forEach((component) => {
-			this.components.set(component.constructor.id, component);
-			this.mask |= component.constructor.mask;
+			this._components.set(component.constructor.id, component);
+			this._mask |= component.constructor.mask;
 		});
 		
 		return this;
@@ -18,21 +22,21 @@ export default class Entity {
 
 	removeComponents(...components) {
 		components.forEach((component) => {
-			const entityComponent = this.components.get(component);
+			const entityComponent = this._components.get(component);
 
 			if (entityComponent) {
-				this.components.delete(entityComponent.constructor.id);
-				this.mask &= ~entityComponent.constructor.mask;
+				this._components.delete(entityComponent.constructor.id);
+				this._mask &= ~entityComponent.constructor.mask;
 			}
 		});
 		return this;
 	}
 
 	hasComponent(component) {
-		return this.components.has(component);
+		return this._components.has(component);
 	}
 
 	getComponent(component) {
-		return this.components.get(component);
+		return this._components.get(component);
 	}
 }

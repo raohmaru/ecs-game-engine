@@ -9,7 +9,7 @@ const compId = Symbol('_id');  // Unique object, used as identifier
 
 let bitMask = 0;
 
-const Entity_addComponents_handler = {
+const Entity_addComponents_proxy = {
     apply: function(target, thisArg, argumentsList) {
         target.apply(thisArg, argumentsList);
 		updateGroups(thisArg);
@@ -57,7 +57,7 @@ export default {
 
 		entity = new Entity(id);
 		entities.set(id, entity);
-		entity.addComponents = new Proxy(entity.addComponents, Entity_addComponents_handler);
+		entity.addComponents = new Proxy(entity.addComponents, Entity_addComponents_proxy);
 		return entity;
 	},
 	

@@ -1,12 +1,16 @@
 export default class Group {
 	constructor(mask) {
-		this.mask = mask;
-		this.entities = new Set();
+		this._mask = mask;
+		this._entities = new Set();
+	}
+	
+	get entities() {
+		return this._entities;
 	}
 	
 	match(entity) {
-		if((this.mask & entity.mask) === this.mask) {
-			this.entities.add(entity);
+		if((this._mask & entity.mask) === this._mask) {
+			this._entities.add(entity);
 		}
 	}
 }

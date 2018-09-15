@@ -1,41 +1,42 @@
 import CONST from './rrr-const.js';
-import CanvasRenderer from './rrr-2d.js';
-
+import Canvas2DRenderer from './rrr-2d.js';
 	
-const createRenderer = (type, canvas) => {
+const createRenderer = (type, canvas, cfg) => {
 	if(type === CONST.CANVAS) {
-		return new CanvasRenderer(canvas);
+		return new Canvas2DRenderer(canvas, cfg);
 	}
 }
 
 class Rrr {
-	constructor(canvas, rendererType, canvasColor) {
-		this.canvas = canvas;
-		this.canvasColor = canvasColor;
-		this.renderer = createRenderer(rendererType, canvas);
-		this.sprites = new WeakSet();
-		this.layers = [];
+	constructor(canvas, rendererType = CONST.CANVAS, cfg) {
+		this._renderer = createRenderer(rendererType, canvas, cfg);
+		this._sprites = new WeakSet();
+		this._layers = [];
 	}
 	
-	get view() {
-		return this.canvas;
+	get stage() {
+		return this._renderer.canvas;
 	}
 	
 	addSprite(sprite, layer = 0) {
 		sprite.layer = layer;
-		this.sprites.add(sprite)
-		if(!this.layers[layer]) {
-			this.layers[layer] = new Set();
+		this._sprites.add(sprite)
+		if(!this._layers[layer]) {
+			this._layers[layer] = new Set();
 		}
-		this.layers[layer].add(sprite);
+		this._layers[layer].add(sprite);
 	}
 
 	render() {
-		this.renderer.prepare(this.canvasColor);
+		this._renderer.prepare();
 		
-		this.layers.forEach( (layer) => {
+		this._layers.forEach( (layer) => {
 			for (let sprite of layer) {
-				this.renderer.drawSprite(sprite);
+				if(sprite.fillStyle) {
+					this._renderer.drawBG(sprite);
+				} else {
+					this._renderer.drawSprite(sprite);
+				}
 			}
 		});
 	}

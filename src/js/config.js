@@ -1,8 +1,11 @@
-import $ from './lib/dom.js';
-
 export default {
-	canvas: $('#world'),
-	fps: 60,
-	renderer: 'canvas',
-	canvasColor: '#d0eed5'
+	width: 480,
+	height: 320,
+	scaleFactor: {
+		x: 2,
+		y: 2
+	},
+	fps: 15,
+	stageColor: '#d0eed5',
+	antialias: true
 }

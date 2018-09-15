@@ -1,3 +1,4 @@
 export default {
-	CANVAS: 'canvas'
+	CANVAS: 'canvas',
+	CL_PIXELATED: 'rrr-pixelated'
 };
