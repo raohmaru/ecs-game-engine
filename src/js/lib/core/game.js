@@ -1,18 +1,18 @@
-import Beat from '../beat.js';
-import ecs  from '../ecs/ecs.js';
-import Rrr  from '../rrr/rrr.js';
+import CONST from './const.js';
+import Beat  from './beat.js';
+import ecs   from '../ecs/ecs.js';
+import Rrr   from '../rrr/rrr.js';
 
 export default class Game {
 	constructor(canvas, rendererType, cfg, states) {
 		this._cfg = cfg;
 		this._states = states;
-		this._ecs = ecs;
 		this._graphics = new Rrr(canvas, rendererType, cfg);
 		this._beat = new Beat(cfg.fps, this.frame.bind(this));
 	}
 	
 	get ecs() {
-		return this._ecs;
+		return ecs;
 	}
 	
 	get graphics() {
@@ -33,7 +33,8 @@ export default class Game {
 	}
 	
 	addBackground(entity, layer = 0) {
-		this._graphics.addSprite(entity.getComponent('Background'), layer);
+		this._graphics.addBackground(entity.getComponent('Background'), layer);
 	}
 };
 
+Object.assign(Game, CONST);

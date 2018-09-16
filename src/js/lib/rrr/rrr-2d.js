@@ -1,14 +1,4 @@
-import CONST from './rrr-const.js';
-
-const prepareBG = (bg) => {
-	if(typeof bg.fillStyle !== 'string') {
-		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
-		bg.view = ctx.createPattern(bg.fillStyle, bg.repetition);
-	} else {
-		bg.view = bg.fillStyle;
-	}	
-}
+import CONST from '../core/const.js';
 
 export default class Canvas2DRenderer {
 	constructor(canvas, {width = 0, height = 0, scaleFactor = {x:1, y:1}, stageColor, antialias = false}) {
@@ -51,12 +41,15 @@ export default class Canvas2DRenderer {
 	}
 		
 	drawBG(bg) {
-		if(!bg.view) {
-			prepareBG(bg);
-		}
+		this._ctx.fillStyle = bg.fillStyle;
 		
-		this._ctx.fillStyle = bg.view;
-		this._ctx.fillRect(0, 0, bg.width || this._canvas.width, bg.height || this._canvas.height);
+		if(bg.dx || bg.dy) {
+			this._ctx.translate(bg.dx, bg.dy);
+			this._ctx.fillRect(bg.x-bg.dx, bg.y-bg.dy, bg.width, bg.height);
+			this.resetTransformation();
+		} else {
+			this._ctx.fillRect(bg.x, bg.y, bg.width, bg.height);
+		}
 	}
 	
 	drawSprite(sprite) {
@@ -74,5 +67,9 @@ export default class Canvas2DRenderer {
 		} else {
 			this._canvas.classList.remove(CONST.CL_PIXELATED);
 		}
+	}
+	
+	resetTransformation() {
+		this._ctx.setTransform(1, 0, 0, 1, 0, 0);
 	}
 };

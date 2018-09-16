@@ -1,4 +1,4 @@
-import CONST from './rrr-const.js';
+import CONST from '../core/const.js';
 import Canvas2DRenderer from './rrr-2d.js';
 	
 const createRenderer = (type, canvas, cfg) => {
@@ -26,13 +26,18 @@ class Rrr {
 		}
 		this._layers[layer].add(sprite);
 	}
+	
+	addBackground(bg, layer) {
+		bg.isBackground = true;
+		this.addSprite(bg, layer)
+	}
 
 	render() {
 		this._renderer.prepare();
 		
 		this._layers.forEach( (layer) => {
 			for (let sprite of layer) {
-				if(sprite.fillStyle) {
+				if(sprite.isBackground) {
 					this._renderer.drawBG(sprite);
 				} else {
 					this._renderer.drawSprite(sprite);
@@ -41,7 +46,5 @@ class Rrr {
 		});
 	}
 };
-
-Object.assign(Rrr, CONST);
 
 export default Rrr;

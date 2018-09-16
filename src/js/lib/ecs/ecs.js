@@ -86,7 +86,7 @@ export default {
 	
 	update(delta) {
 		systems.forEach((system) => {
-			system.update(delta);
+			system.update && system.update(delta);
 		});
 	}
 };
