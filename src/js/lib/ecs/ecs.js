@@ -35,7 +35,7 @@ const updateGroups = (entity) => {
 export default {
 	registerComponents(...comps) {
 		comps.forEach((ComponentClass) => {
-			if (ComponentClass[compId]) {
+			if (ComponentClass[compId] && ComponentClass[compId] === ComponentClass.name) {
 				throw new Error('The component is already registered');
 				return;
 			}

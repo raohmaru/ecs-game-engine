@@ -7,6 +7,7 @@ import Translation   from './systems/translation.js';
 import SysBackground from './systems/sysbg.js';
 import Sprite        from './components/sprite.js';
 import Background    from './components/background.js';
+import Pattern       from './components/pattern.js';
 import Position      from './components/position.js';
 import Velocity      from './components/velocity.js';
 import Translate     from './components/translate.js';
@@ -23,6 +24,7 @@ function init() {
 		Velocity,
 		Sprite,
 		Background,
+		Pattern,
 		Translate
 	);
 	
@@ -52,7 +54,8 @@ function init() {
 	const bg1 = game.ecs
 		.createEntity('bg1')
 		.addComponents(
-			new Background(createBG0Sprite(), game.graphics.stage.width, game.graphics.stage.height/2),
+			new Background(null, game.graphics.stage.width, game.graphics.stage.height/2),
+			new Pattern(createBG1Sprite()),
 			new Translate(1, 1)
 		);	
 	game.addBackground(bg1, 0);
@@ -60,7 +63,8 @@ function init() {
 	const bg2 = game.ecs
 		.createEntity('bg2')
 		.addComponents(
-			new Background(createBG0Sprite(), game.graphics.stage.width, game.graphics.stage.height/2, 0, game.graphics.stage.height/2),
+			new Background(null, game.graphics.stage.width, game.graphics.stage.height/2, 0, game.graphics.stage.height/2),
+			new Pattern(createBG1Sprite()),
 			new Translate(-1, -1)
 		);	
 	game.addBackground(bg2, 0);
@@ -84,7 +88,7 @@ function createPlayerSprite() {
 	return canvas;
 }
 
-function createBG0Sprite() {
+function createBG1Sprite() {
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
 	
