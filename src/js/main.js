@@ -5,6 +5,7 @@ import Movement      from './systems/movement.js';
 import Render        from './systems/render.js';
 import Translation   from './systems/translation.js';
 import SysBackground from './systems/sysbg.js';
+import Keyboard      from './systems/keyboard.js';
 import Sprite        from './components/sprite.js';
 import Background    from './components/background.js';
 import Pattern       from './components/pattern.js';
@@ -32,15 +33,16 @@ function init() {
 		new Movement(game),
 		new Translation(game),
 		new SysBackground(game),
-		new Render(game)
+		new Render(game),
+		new Keyboard(game)
 	);
 	
 	const player = game.ecs
 		.createEntity('player')
 		.addComponents(
+			new Sprite(createPlayerSprite()),
 			new Position(0, 0),
-			new Velocity(10, 0),
-			new Sprite(createPlayerSprite())
+			new Velocity(16, 16)
 		);
 	game.addSprite(player, 1);
 	
@@ -57,7 +59,7 @@ function init() {
 			new Background(null, game.graphics.stage.width, game.graphics.stage.height/2),
 			new Pattern(createBG1Sprite()),
 			new Translate(1, 1)
-		);	
+		);
 	game.addBackground(bg1, 0);
 	
 	const bg2 = game.ecs

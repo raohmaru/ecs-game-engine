@@ -70,6 +70,6 @@ export default class Canvas2DRenderer {
 	}
 	
 	resetTransformation() {
-		this._ctx.setTransform(1, 0, 0, 1, 0, 0);
+		this._ctx.setTransform(...CONST.IDENTITY_MATRIX);
 	}
 };

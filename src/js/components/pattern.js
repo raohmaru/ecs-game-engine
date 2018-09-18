@@ -6,6 +6,7 @@ const createPattern = (fillStyle, repetition) => {
 
 export default class Pattern {
 	constructor(view, repetition = 'repeat') {
+		this.view = view;
 		this.fillStyle = createPattern(view, repetition);
 		this.repetition = repetition;
 	}
