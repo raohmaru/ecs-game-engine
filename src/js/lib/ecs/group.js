@@ -1,4 +1,4 @@
-import Sgnl from '../core/sgnl.js';
+import Sgnl from '../util/sgnl.js';
 
 export default class Group {
 	constructor(mask) {

@@ -1,4 +1,8 @@
 import CONST from '../core/const.js';
+import Rectangle from '../geom/rectangle.js';
+
+// Cached rectangle object to avoid creation of new rectangles each frame
+const intersect = new Rectangle();
 
 export default class Canvas2DRenderer {
 	constructor(canvas, {width = 0, height = 0, scaleFactor = {x:1, y:1}, stageColor, antialias = false}) {
@@ -40,22 +44,52 @@ export default class Canvas2DRenderer {
 		}
 	}
 		
-	drawBG(bg) {
-		this._ctx.fillStyle = bg.fillStyle;
+	drawBG(bg, viewport) {
+		Rectangle.intersect(bg.box, viewport, intersect);
+		let isStatic = bg.parallax || bg.fixed;
 		
-		if(bg.dx || bg.dy) {
-			this._ctx.translate(bg.dx, bg.dy);
-			this._ctx.fillRect(bg.x-bg.dx, bg.y-bg.dy, bg.width, bg.height);
-			this.resetTransformation();
-		} else {
-			this._ctx.fillRect(bg.x, bg.y, bg.width, bg.height);
+		if(intersect.area || isStatic) {
+			this._ctx.fillStyle = bg.fillStyle;
+			
+			let dx = 0;
+			let dy = 0;
+			const translate = (bg.dx || bg.dy || (typeof bg.view !== 'string' && bg.parallax));
+			
+			if(translate) {
+				dx = (bg.dx || 0) - viewport.x;
+				dy = (bg.dy || 0) - viewport.y;
+				this._ctx.translate(dx, dy);
+			}
+			
+			const x      = (isStatic ? bg.x      : intersect.x - viewport.x) - dx;
+			const y      = (isStatic ? bg.y      : intersect.y - viewport.y) - dy;
+			const width  =  isStatic ? bg.width  : intersect.width;
+			const height =  isStatic ? bg.height : intersect.height;
+			
+			this._ctx.fillRect(x, y, width, height);
+				
+			if(translate) {
+				this._ctx.translate(-dx, -dy);
+			}
 		}
 	}
 	
-	drawSprite(sprite) {
-		// https://jsperf.com/canvas-drawimage-vs-putimagedata/3
-		this._ctx.drawImage(sprite.view, sprite.x, sprite.y);
-		// this._ctx.putImageData(sprite.view, sprite.x, sprite.y);
+	drawSprite(sprite, viewport) {
+		Rectangle.intersect(sprite.box, viewport, intersect);
+		if(intersect.area) {
+			// https://jsperf.com/canvas-drawimage-vs-putimagedata/3
+			this._ctx.drawImage(
+				sprite.view,               // image
+				0,                         // sx
+				0,                         // sy
+				intersect.width,           // sWidth
+				intersect.height,          // sHeight
+				intersect.x - viewport.x,  // dx
+				intersect.y - viewport.y,  // dy
+				intersect.width,           // dWidth
+				intersect.height           // dHeight
+			);
+		}
 	}
 	
 	setAntialias(antialias) {
@@ -69,7 +103,8 @@ export default class Canvas2DRenderer {
 		}
 	}
 	
-	resetTransformation() {
+	resetTransformations() {
+		// this._ctx.resetTransform();  // Not yet available
 		this._ctx.setTransform(...CONST.IDENTITY_MATRIX);
 	}
 };

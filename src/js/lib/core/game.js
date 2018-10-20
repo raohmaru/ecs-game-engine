@@ -1,5 +1,5 @@
 import CONST from './const.js';
-import Beat  from './beat.js';
+import Beat  from '../util/beat.js';
 import ecs   from '../ecs/ecs.js';
 import Rrr   from '../rrr/rrr.js';
 
@@ -9,6 +9,9 @@ export default class Game {
 		this._states = states;
 		this._graphics = new Rrr(canvas, rendererType, cfg);
 		this._beat = new Beat(cfg.fps, this.frame.bind(this));
+		// Default properties
+		this._scenes = [];
+		this._currentScene = 0;
 	}
 	
 	get ecs() {
@@ -17,6 +20,26 @@ export default class Game {
 	
 	get graphics() {
 		return this._graphics;
+	}
+	
+	get stage() {
+		return this._graphics.stage;
+	}
+	
+	get camera() {
+		return this._graphics.camera;
+	}
+	
+	get currentScene() {
+		return this._currentScene;
+	}
+	set currentScene(id) {
+		if(typeof id === 'string') {
+			this._currentScene = id;
+		} else {
+			const values = Object.values(this._scenes);
+			this._currentScene = values[id];
+		}
 	}
 	
 	start() {
@@ -28,12 +51,19 @@ export default class Game {
 		this._states.render && this._states.render(delta);
 	}
 	
-	addSprite(entity, layer = 1) {
-		this._graphics.addSprite(entity.getComponent('Sprite'), layer);
+	render() {
+		this._graphics.render(this._currentScene);
 	}
 	
-	addBackground(entity, layer = 0) {
-		this._graphics.addBackground(entity.getComponent('Background'), layer);
+	addScene(scene) {
+		this._scenes[scene.id] = scene;
+		if(!this._currentScene) {
+			this._currentScene = scene;
+		}
+	}
+	
+	addCamera(entity) {
+		this._graphics.addCamera(entity.getComponent('Camera'));
 	}
 };
 

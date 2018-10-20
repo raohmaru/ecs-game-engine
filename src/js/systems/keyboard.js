@@ -5,10 +5,10 @@ export default class Keyboard {
 		game.input = game.input || {};
 		this._keyboard = game.input.keyboard = {};
 		
-		const stage = game.graphics.stage;
-		stage.focus();
+		const stage = game.stage;
 		// Making the canvas focusable enables the keyboard events on it
 		stage.setAttribute('tabindex', '1');
+		stage.focus();
 		stage.addEventListener('keydown', this.onKeyDown.bind(this));
 		stage.addEventListener('keyup', this.onKeyUp.bind(this));
 	}

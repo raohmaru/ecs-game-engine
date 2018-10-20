@@ -10,40 +10,35 @@ const createRenderer = (type, canvas, cfg) => {
 class Rrr {
 	constructor(canvas, rendererType = CONST.CANVAS, cfg) {
 		this._renderer = createRenderer(rendererType, canvas, cfg);
-		this._sprites = new WeakSet();
-		this._layers = [];
+		// Default properties
+		this._camera;
 	}
 	
 	get stage() {
 		return this._renderer.canvas;
 	}
 	
-	addSprite(sprite, layer = 0) {
-		sprite.layer = layer;
-		this._sprites.add(sprite)
-		if(!this._layers[layer]) {
-			this._layers[layer] = new Set();
-		}
-		this._layers[layer].add(sprite);
-	}
-	
-	addBackground(bg, layer) {
-		bg.isBackground = true;
-		this.addSprite(bg, layer)
+	get camera() {
+		return this._camera;
 	}
 
-	render() {
+	render(scene) {
 		this._renderer.prepare();
+		const viewport = this._camera.viewport;
 		
-		this._layers.forEach( (layer) => {
-			for (let sprite of layer) {
-				if(sprite.isBackground) {
-					this._renderer.drawBG(sprite);
+		scene.layers.forEach( (layer) => {
+			for (let obj of layer) {
+				if(obj.isBackground) {
+					this._renderer.drawBG(obj, viewport);
 				} else {
-					this._renderer.drawSprite(sprite);
+					this._renderer.drawSprite(obj, viewport);
 				}
 			}
 		});
+	}
+	
+	addCamera(camera) {
+		this._camera = camera;
 	}
 };
 

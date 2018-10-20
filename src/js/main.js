@@ -1,17 +1,19 @@
 import cfg           from './config.js';
 import $             from './util/dom.js';
 import Game          from './lib/core/game.js';
+import Scene         from './lib/core/scene.js';
 import Movement      from './systems/movement.js';
 import Render        from './systems/render.js';
 import Translation   from './systems/translation.js';
 import SysBackground from './systems/sysbg.js';
 import Keyboard      from './systems/keyboard.js';
+import Director      from './systems/director.js';
 import Sprite        from './components/sprite.js';
 import Background    from './components/background.js';
-import Pattern       from './components/pattern.js';
 import Position      from './components/position.js';
 import Velocity      from './components/velocity.js';
 import Translate     from './components/translate.js';
+import Camera        from './components/camera.js';
 
 // variables
 let game;
@@ -25,17 +27,22 @@ function init() {
 		Velocity,
 		Sprite,
 		Background,
-		Pattern,
-		Translate
+		Translate,
+		Camera
 	);
 	
 	game.ecs.addSystems(
 		new Movement(game),
 		new Translation(game),
 		new SysBackground(game),
-		new Render(game),
-		new Keyboard(game)
+		new Keyboard(game),
+		new Director(game),
+		new Render(game)
 	);
+	
+	const scene0 = new Scene(game, 'scene0', 480, 320);
+	game.addScene(scene0);
+	game.currentScene = 0;
 	
 	const player = game.ecs
 		.createEntity('player')
@@ -44,32 +51,70 @@ function init() {
 			new Position(0, 0),
 			new Velocity(16, 16)
 		);
-	game.addSprite(player, 1);
-	
-	const bg0 = game.ecs
-		.createEntity('bg0')
-		.addComponents(
-			new Background('#cdf443', game.graphics.stage.width, game.graphics.stage.height)
-		);	
-	game.addBackground(bg0, 0);
+	scene0.addSprite(player, 1);
 	
 	const bg1 = game.ecs
 		.createEntity('bg1')
 		.addComponents(
-			new Background(null, game.graphics.stage.width, game.graphics.stage.height/2),
-			new Pattern(createBG1Sprite()),
-			new Translate(1, 1)
+			new Background({
+				view    : createBG1Sprite(),
+				width   : game.stage.width,
+				height  : game.stage.height,
+				parallax: true
+				// fixed: true
+			}),
+			// new Translate(1, 1)
 		);
-	game.addBackground(bg1, 0);
+	scene0.addBackground(bg1, 0);
+	
+	const bg0 = game.ecs
+		.createEntity('bg0')
+		.addComponents(
+			new Background({
+				view  : '#cdf443',
+				width : game.stage.width/2,
+				height: game.stage.height/2,
+				x     : 64,
+				y     : 32
+			 })
+		);	
+	scene0.addBackground(bg0, 0);
+	
+	const bg3 = game.ecs
+		.createEntity('bg3')
+		.addComponents(
+			new Background({
+				view  : createBG1Sprite(),
+				width : game.stage.width/2,
+				height: game.stage.height/2,
+				x     : 64,
+				y     : 32
+			}),
+			new Translate(0, 1)
+		);	
+	scene0.addBackground(bg3, 0);
 	
 	const bg2 = game.ecs
 		.createEntity('bg2')
 		.addComponents(
-			new Background(null, game.graphics.stage.width, game.graphics.stage.height/2, 0, game.graphics.stage.height/2),
-			new Pattern(createBG1Sprite()),
+			new Background({
+				view  : createBG1Sprite(),
+				width : game.stage.width,
+				height: game.stage.height/2,
+				x     : 0,
+				y     : game.stage.height/2
+			}),
 			new Translate(-1, -1)
 		);	
-	game.addBackground(bg2, 0);
+	scene0.addBackground(bg2, 0);
+	
+	const camera = game.ecs
+		.createEntity('camera')
+		.addComponents(
+			new Camera(game)
+		);
+	camera.getComponent('Camera').follow(player);
+	game.addCamera(camera);
 	
 	game.start();
 }

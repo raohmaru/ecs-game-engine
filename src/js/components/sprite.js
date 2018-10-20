@@ -1,5 +1,7 @@
-export default class Sprite {
+import Renderable from './renderable.js';
+
+export default class Sprite extends Renderable {
 	constructor(view) {
-		this.view = view;
+		super(view, view.width, view.height);
 	}
 };

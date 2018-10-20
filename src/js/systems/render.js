@@ -1,6 +1,6 @@
 export default class Render {
 	constructor(game) {
-		this._graphics = game.graphics;
+		this._game = game;
 		this._group = game.ecs.getEntitiesByComponents('Position', 'Sprite');
 	}
 
@@ -12,6 +12,6 @@ export default class Render {
 			sprite.y = position.y;
 		}
 
-		this._graphics.render();
+		this._game.render();
 	}
 }
