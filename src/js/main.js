@@ -5,7 +5,6 @@ import Scene         from './lib/core/scene.js';
 import Movement      from './systems/movement.js';
 import Render        from './systems/render.js';
 import Translation   from './systems/translation.js';
-import SysBackground from './systems/sysbg.js';
 import Keyboard      from './systems/keyboard.js';
 import Director      from './systems/director.js';
 import Sprite        from './components/sprite.js';
@@ -34,7 +33,6 @@ function init() {
 	game.ecs.addSystems(
 		new Movement(game),
 		new Translation(game),
-		new SysBackground(game),
 		new Keyboard(game),
 		new Director(game),
 		new Render(game)
