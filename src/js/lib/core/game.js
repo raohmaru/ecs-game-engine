@@ -1,7 +1,8 @@
-import CONST from './const.js';
-import Beat  from '../util/beat.js';
-import ecs   from '../ecs/ecs.js';
-import Rrr   from '../rrr/rrr.js';
+import CONST  from './const.js';
+import Beat   from '../util/beat.js';
+import ecs    from '../ecs/ecs.js';
+import Rrr    from '../rrr/rrr.js';
+import Loader from '../net/loader.js';
 
 export default class Game {
 	constructor(canvas, rendererType, cfg, states) {
@@ -9,6 +10,7 @@ export default class Game {
 		this._states = states;
 		this._graphics = new Rrr(canvas, rendererType, cfg);
 		this._beat = new Beat(cfg.fps, this.frame.bind(this));
+		this._loader = new Loader();
 		// Default properties
 		this._scenes = [];
 		this._currentScene = 0;
