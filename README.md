@@ -1,31 +1,16 @@
-# Offline Pizza Delivery
-A browser game for the JavaScript code competition [Js13kGames](https://js13kgames.com/).
+# ECS Game Engine
+A JavaScript game engine based in the [Entity–Component–System architectural pattern](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system).
 
-[Play it now!](https://raohmaru.github.io/offline-pizza-delivery/src/)
+Initially developed for the JavaScript code competition [Js13kGames](https://js13kgames.com/).  
+Inspired by https://github.com/kutuluk/js13k-ecs/.
+
+[Play it now!](https://raohmaru.github.io/ecs-game-engine/src/)
 
 ## Getting Started
 
 ### Development
 
 ### Available npm commands
-`npm run build`  
-Generate CSS files and copies HTML and JS files to dist/ folder.
-
-`npm run build:prod`  
-Cleans dist/ folder, lints HTML, CSS and JS files, generate CSS files and minifies all files into
-dist/ folder.
-
-`npm run lint`  
-Lints HTML, CSS and JS files.
-
-`npm run clean`  
-Cleans dist/ folder.
-
-`npm run watch`  
-Watches for changes in src/ folder and runs the appropriate task when a file is modified.
-
-`npm start`  
-Starts a dev server at 127.0.0.1:8080 with path to dist/ folder.
 
 ## Browser Support
 The game supports Edge, Firefox 34+, Chrome 36+, Safari 9+.
