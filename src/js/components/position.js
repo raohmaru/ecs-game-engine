@@ -1,6 +1,7 @@
-export default class Position {
+import Point from '../lib/geom/point.js';
+
+export default class Position extends Point {
 	constructor(x, y) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 	}
 };

@@ -35,7 +35,7 @@ export default class Game {
 	}
 	set currentScene(id) {
 		if(typeof id === 'string') {
-			this._currentScene = id;
+			this._currentScene = this._scenes[id];
 		} else {
 			const values = Object.values(this._scenes);
 			this._currentScene = values[id];
