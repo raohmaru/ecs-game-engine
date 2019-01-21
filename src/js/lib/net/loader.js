@@ -51,7 +51,11 @@ export default class Loader {
 		
 		fetch(asset.path)
 			.then((response) => {
-				return response.blob();
+				if(response.status === 200) {
+					return response.blob();
+				} else {
+					return null;
+				}
 			})
 			.then((data) => {
 				this.assetLoaded(data);
