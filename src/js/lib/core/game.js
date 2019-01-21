@@ -10,7 +10,7 @@ export default class Game {
 		this._states = states;
 		this._graphics = new Rrr(canvas, rendererType, cfg);
 		this._beat = new Beat(cfg.fps, this.frame.bind(this));
-		this._loader = new Loader();
+		this._loader = new Loader(true);
 		// Default properties
 		this._scenes = [];
 		this._currentScene = 0;
@@ -32,6 +32,10 @@ export default class Game {
 		return this._graphics.camera;
 	}
 	
+	get assets() {
+		return this._loader;
+	}
+	
 	get currentScene() {
 		return this._currentScene;
 	}
@@ -42,6 +46,13 @@ export default class Game {
 			const values = Object.values(this._scenes);
 			this._currentScene = values[id];
 		}
+	}
+	
+	prepare() {
+		this._loader.start()
+			.complete.then(() => {
+				this._states.ready && this._states.ready();
+			});
 	}
 	
 	start() {

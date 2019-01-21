@@ -75,20 +75,22 @@ export default class Canvas2DRenderer {
 	}
 	
 	drawSprite(sprite, viewport) {
-		Rectangle.intersect(sprite.box, viewport, intersect);
-		if(intersect.area) {
-			// https://jsperf.com/canvas-drawimage-vs-putimagedata/3
-			this._ctx.drawImage(
-				sprite.view,               // image
-				0,                         // sx
-				0,                         // sy
-				intersect.width,           // sWidth
-				intersect.height,          // sHeight
-				intersect.x - viewport.x,  // dx
-				intersect.y - viewport.y,  // dy
-				intersect.width,           // dWidth
-				intersect.height           // dHeight
-			);
+		if(sprite.view) {
+			Rectangle.intersect(sprite.box, viewport, intersect);
+			if(intersect.area) {
+				// https://jsperf.com/canvas-drawimage-vs-putimagedata/3
+				this._ctx.drawImage(
+					sprite.view,                // image
+					intersect.x - sprite.box.x, // sx
+					intersect.y - sprite.box.y, // sy
+					intersect.width,            // sWidth
+					intersect.height,           // sHeight
+					intersect.x - viewport.x,   // dx
+					intersect.y - viewport.y,   // dy
+					intersect.width,            // dWidth
+					intersect.height            // dHeight
+				);
+			}
 		}
 	}
 	

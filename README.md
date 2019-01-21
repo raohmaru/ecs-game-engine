@@ -21,6 +21,7 @@ In order to support older browsers, you need polyfills for the following JavaScr
 - [WeakSet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)
 - [Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
 - [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+- [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 
 ## License
 Released under the MIT license.

@@ -16,12 +16,17 @@ export default class Background extends Renderable {
 		parallax = false,
 		fixed = false
 	}) {
-		super(view, width, height, x, y);
+		let v = view;
 		if(typeof view === 'string' || view instanceof CanvasGradient) {
-			this.fillStyle = view;
-		} else {
+			v = null;
+		}
+		super(v, width, height, x, y);
+		
+		if(this.view) {
 			this.fillStyle = createPattern(view, repetition);
 			this.repetition = repetition;
+		} else {
+			this.fillStyle = view;
 		}		
 		this.parallax = parallax;
 		this.fixed = fixed;

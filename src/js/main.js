@@ -19,7 +19,7 @@ let game;
 const $statistics = $('#statistics');
 	
 function init() {
-	game = new Game($('#stage'), Game.CANVAS, cfg, {render});
+	game = new Game($('#stage'), Game.CANVAS, cfg, {ready, render});
 	
 	game.ecs.registerComponents(
 		Position,
@@ -51,11 +51,20 @@ function init() {
 		);
 	scene0.addSprite(player, 1);
 	
+	const player2 = game.ecs
+		.createEntity('player2')
+		.addComponents(
+			new Sprite('../assets/player.png', 32, 32),
+			new Position(32, 32),
+			new Velocity(8, 8)
+		);
+	scene0.addSprite(player2, 1);
+	
 	const bg1 = game.ecs
 		.createEntity('bg1')
 		.addComponents(
 			new Background({
-				view    : createBG1Sprite(),
+				view    : createBGSprite(),
 				width   : game.stage.width,
 				height  : game.stage.height,
 				parallax: true
@@ -82,7 +91,7 @@ function init() {
 		.createEntity('bg3')
 		.addComponents(
 			new Background({
-				view  : createBG1Sprite(),
+				view  : createBGSprite(),
 				width : game.stage.width/2,
 				height: game.stage.height/2,
 				x     : 64,
@@ -96,7 +105,7 @@ function init() {
 		.createEntity('bg2')
 		.addComponents(
 			new Background({
-				view  : createBG1Sprite(),
+				view  : createBGSprite(),
 				width : game.stage.width,
 				height: game.stage.height/2,
 				x     : 0,
@@ -113,7 +122,10 @@ function init() {
 		);
 	camera.getComponent('Camera').follow(player);
 	game.addCamera(camera);
-	
+	game.prepare();
+}
+
+function ready() {
 	game.start();
 }
 
@@ -133,7 +145,7 @@ function createPlayerSprite() {
 	return canvas;
 }
 
-function createBG1Sprite() {
+function createBGSprite() {
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
 	

@@ -1,8 +1,12 @@
 import Rectangle from '../lib/geom/rectangle.js';
 
 export default class Renderable {
-	constructor(view, width, height, x = 0, y = 0) {
-		this.view = view;
+	constructor(viewOrPath, width, height, x = 0, y = 0) {
+		if(typeof viewOrPath === 'string') {
+			this.path = viewOrPath;
+		} else {
+			this.view = viewOrPath;
+		}
 		this.box = new Rectangle(width, height, x, y);
 	}
 	

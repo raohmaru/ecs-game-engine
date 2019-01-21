@@ -9,18 +9,19 @@ export default class Movement {
 		for (let entity of this._group.entities) {
 			const position = entity.getComponent('Position');
 			const velocity = entity.getComponent('Velocity');
+			const keyboard = this._game.input.keyboard;
 			
-			if(this._game.input.keyboard.left) {
+			if(keyboard.left) {
 				position.x -= velocity.x;
 			}
-			if(this._game.input.keyboard.right) {
+			if(keyboard.right) {
 				position.x += velocity.x;
 			}
 			
-			if(this._game.input.keyboard.up) {
+			if(keyboard.up) {
 				position.y -= velocity.y;
 			}
-			if(this._game.input.keyboard.down) {
+			if(keyboard.down) {
 				position.y += velocity.y;
 			}
 		}

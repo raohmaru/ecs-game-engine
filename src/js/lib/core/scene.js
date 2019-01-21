@@ -1,13 +1,4 @@
 let currentId = 1;
-
-const addObjectToLayer = (obj, layerId, layers) => {	
-	obj.layer = layerId;
-	if(!layers[layerId]) {
-		layers[layerId] = new Set();
-	}
-	layers[layerId].add(obj);
-}
-
 export default class Scene {
 	constructor(game, id, width = 0, height = 0) {
 		this._game = game;
@@ -32,12 +23,25 @@ export default class Scene {
 	get height() {
 		return this._height;
 	}
-	
+
+	addObjectToLayer(obj, layerId, layers) {	
+		obj.layer = layerId;
+		if(!layers[layerId]) {
+			layers[layerId] = new Set();
+		}
+		layers[layerId].add(obj);
+		
+		if(obj.path) {
+			this._game.assets.loadBitmap(obj.path)
+				.then((bmp) => obj.view = bmp);
+		}
+	}
+
 	addSprite(entity, layer = 1) {
-		addObjectToLayer(entity.getComponent('Sprite'), layer, this._layers);
+		this.addObjectToLayer(entity.getComponent('Sprite'), layer, this._layers);
 	}
 	
 	addBackground(entity, layer = 0) {
-		addObjectToLayer(entity.getComponent('Background'), layer, this._layers);
+		this.addObjectToLayer(entity.getComponent('Background'), layer, this._layers);
 	}
 };
