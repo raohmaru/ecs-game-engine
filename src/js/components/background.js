@@ -22,7 +22,7 @@ export default class Background extends Renderable {
 		}
 		super(v, width, height, x, y);
 		
-		if(this.view) {
+		if(v) {
 			this.fillStyle = createPattern(view, repetition);
 			this.repetition = repetition;
 		} else {

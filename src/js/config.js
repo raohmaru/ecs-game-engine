@@ -7,5 +7,6 @@ export default {
 	},
 	fps: 15,
 	stageColor: '#d0eed5',
-	antialias: true
+	antialias: false,
+	debug: false
 }

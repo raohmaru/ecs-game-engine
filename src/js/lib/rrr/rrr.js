@@ -1,14 +1,14 @@
-import CONST from '../core/const.js';
+import C from '../core/const.js';
 import Canvas2DRenderer from './rrr-2d.js';
 	
 const createRenderer = (type, canvas, cfg) => {
-	if(type === CONST.CANVAS) {
+	if(type === C.CANVAS) {
 		return new Canvas2DRenderer(canvas, cfg);
 	}
 }
 
 class Rrr {
-	constructor(canvas, rendererType = CONST.CANVAS, cfg) {
+	constructor(canvas, rendererType = C.CANVAS, cfg) {
 		this._renderer = createRenderer(rendererType, canvas, cfg);
 		// Default properties
 		this._camera;

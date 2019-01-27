@@ -1,4 +1,4 @@
-import CONST  from './const.js';
+import C  from './const.js';
 import Beat   from '../util/beat.js';
 import ecs    from '../ecs/ecs.js';
 import Rrr    from '../rrr/rrr.js';
@@ -80,4 +80,4 @@ export default class Game {
 	}
 };
 
-Object.assign(Game, CONST);
+Object.assign(Game, C);

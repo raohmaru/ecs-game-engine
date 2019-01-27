@@ -33,7 +33,7 @@ export default class Scene {
 		
 		if(obj.path) {
 			this._game.assets.loadBitmap(obj.path)
-				.then((bmp) => obj.view = bmp);
+				.then((bmp) => obj.updateView(bmp));
 		}
 	}
 

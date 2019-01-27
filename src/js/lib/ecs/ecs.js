@@ -18,9 +18,9 @@ const Entity_addComponents_proxy = {
 };
 
 const getMask = (comps) => {
-	return comps.reduce( (acc, compId) => {
-		if(components.has(compId)) {
-			return acc | components.get(compId).mask;
+	return comps.reduce( (acc, id) => {
+		if(components.has(id)) {
+			return acc | components.get(id).mask;
 		}
 		return 0;
 	}, 0);

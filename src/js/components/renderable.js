@@ -7,7 +7,8 @@ export default class Renderable {
 		} else {
 			this.view = viewOrPath;
 		}
-		this.box = new Rectangle(width, height, x, y);
+		this.box = new Rectangle(width, height, x, y); // Rendered bounding box 
+		this.drawBox = new Rectangle(width, height, x, y); // Intrinsic bounding box
 	}
 	
 	get x() {
@@ -32,5 +33,9 @@ export default class Renderable {
 	
 	set y(value) {
 		this.box.y = value;
+	}
+	
+	updateView(view) {
+		this.view = view;
 	}
 };

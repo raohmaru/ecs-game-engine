@@ -1,4 +1,4 @@
-import CONST, { keyCodes } from '../lib/core/const.js';
+import C, { keyCodes } from '../lib/core/const.js';
 
 export default class Keyboard {
 	constructor(game) {

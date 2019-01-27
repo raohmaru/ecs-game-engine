@@ -26,6 +26,10 @@ export default class Rectangle {
 		const a = this.width * this.height;
 		return a > 0 ? a : 0;
 	}
+	
+	clone() {
+		return new Rectangle(this.width, this.height, this.x, this.y);
+	}
 }
 
 Rectangle.intersect = (rect1, rect2, rect) => {
