@@ -1,5 +1,6 @@
 import C from '../core/const.js';
 import Signal from '../util/sgnl.js';
+import { toRad } from '../util/mth.js';
 
 export default class Transform {
 	constructor() {
@@ -29,14 +30,24 @@ export default class Transform {
 		this.checkModifications();
 	}
 	
+	get rotation() {
+		return this._rotation;
+	}
+	
+	set rotation(value) {
+		this._rotation = toRad(value);
+		this.checkModifications();
+	}
+	
 	reset() {
 		this._matrix = C.IDENTITY_MATRIX.slice();
+		this._rotation = 0;
 		this._modified = false;
 		this.change.emit();
 	}
 	
 	checkModifications() {
-		this._modified = this._matrix.join() !== C.IDENTITY_MATRIX.join();
+		this._modified = this._matrix.join() !== C.IDENTITY_MATRIX.join() || this._rotation !== 0;
 		if(this._modified) {
 			this.change.emit();
 		}

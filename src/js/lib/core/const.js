@@ -4,9 +4,9 @@ const cfg = {
 	IDENTITY_MATRIX: [1, 0, 0, 1, 0, 0],
 	
 	TFR_SCALE_X: 0,
-	TFR_SCALE_Y: 3,
-	TFR_SKEW_X: 2,
 	TFR_SKEW_Y: 1,
+	TFR_SKEW_X: 2,
+	TFR_SCALE_Y: 3,
 	TFR_DX: 4,
 	TFR_DY: 5,
 	

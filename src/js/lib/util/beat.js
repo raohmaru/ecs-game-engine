@@ -14,12 +14,10 @@ export default class Beat {
 	}
 
 	start() {
-		let me = this;
-		
 		this._startTime = window.performance.now();
 		this._previousTime = this._startTime;
 		this._previousDeltaTime = this._startTime;
-		this._onFrame = (currentTime) => me.frame(currentTime);  // Wrapper to keep the scope (faster than .bind()?)
+		this._onFrame = (currentTime) => this.frame(currentTime);  // Wrapper to keep the scope (faster than .bind()?)
 		this.frame(this._startTime);
 	}
 

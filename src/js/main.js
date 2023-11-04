@@ -69,6 +69,7 @@ function init() {
 			new Movable(),
 			new Direction()
 		);
+	player.getComponent('Sprite').transformation.rotation = 45;
 	scene0.addSprite(player, 1);
 	
 	const player50 = game.ecs

@@ -123,28 +123,44 @@ export default class Canvas2DRenderer {
 					if(applyTransf) {
 						this._ctx.setTransform(...matrix);
 					}
+					if(sprite.transformation.rotation !== 0) {
+						matrix[C.TFR_DX] = d.x;
+						matrix[C.TFR_DY] = d.y;
+						this._ctx.setTransform(...matrix);
+						d.x = 0;
+						d.y = 0;
+						this._ctx.rotate(sprite.transformation.rotation);
+						// const angle_sine = Math.sin(sprite.transformation.rotation);
+						// const angle_cosine = Math.cos(sprite.transformation.rotation);
+						// matrix[C.TFR_SCALE_X] = angle_cosine;
+						// matrix[C.TFR_SKEW_Y] = angle_sine;
+						// matrix[C.TFR_SKEW_X] = -angle_sine;
+						// matrix[C.TFR_SCALE_Y] = angle_cosine;
+						applyTransf = true;
+					}
 				}
 				
 				// https://jsperf.com/canvas-drawimage-vs-putimagedata/3
 				this._ctx.drawImage(
-					sprite.view,     // image
+					sprite.view,      // image
 					s.x,              // sx
 					s.y,              // sy
-					sWidth,          // sWidth
-					sHeight,         // sHeight
+					sWidth,           // sWidth
+					sHeight,          // sHeight
 					d.x,              // dx
 					d.y,              // dy
-					intersect.width, // dWidth
-					intersect.height // dHeight
+					intersect.width,  // dWidth
+					intersect.height  // dHeight
 				);
-				
-				if(applyTransf) {
-					this.resetTransformation();
-				}
 				
 				if(this._debug) {
 					this._ctx.strokeStyle = 'red';
 					this._ctx.strokeRect(d.x, d.y, intersect.width, intersect.height);
+				}
+				
+				if(applyTransf) {
+					this.resetTransformation();
+					// this._ctx.rotate(0);
 				}
 			}
 		}
