@@ -1,4 +1,4 @@
-export default class Render {
+export class Render {
 	constructor(game) {
 		this._game = game;
 		this._sprites = game.ecs.getEntitiesByComponents('Position', 'Sprite');

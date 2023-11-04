@@ -1,4 +1,5 @@
 let currentId = 1;
+
 export default class Scene {
 	constructor(game, id, width = 0, height = 0) {
 		this._game = game;

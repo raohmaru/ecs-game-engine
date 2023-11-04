@@ -1,5 +1,5 @@
 export default class Beat {
-	constructor(fps, cb) {
+	constructor(fps = 60, cb) {
 		this._fps = fps;
 		this._cb = cb;
 		
@@ -17,7 +17,8 @@ export default class Beat {
 		this._startTime = window.performance.now();
 		this._previousTime = this._startTime;
 		this._previousDeltaTime = this._startTime;
-		this._onFrame = (currentTime) => this.frame(currentTime);  // Wrapper to keep the scope (faster than .bind()?)
+		// Wrapper to keep the scope (faster than .bind()?)
+		this._onFrame = (currentTime) => this.frame(currentTime);
 		this.frame(this._startTime);
 	}
 

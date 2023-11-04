@@ -16,7 +16,6 @@ export default class Entity {
 			this._components.set(component.constructor.id, component);
 			this._mask |= component.constructor.mask;
 		});
-		
 		return this;
 	}
 

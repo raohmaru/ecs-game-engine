@@ -1,4 +1,4 @@
-export default class Movement {
+export class Movement {
 	constructor(game) {
 		this._game = game;
 		this._group = game.ecs.getEntitiesByComponents('Position', 'Velocity', 'Movable', 'Sprite');

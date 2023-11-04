@@ -1,6 +1,6 @@
 const abs = Math.abs;
 
-export default class Puppeter {
+export class Puppeteer {
 	constructor(game) {
 		this._game = game;
 		this._group = game.ecs.getEntitiesByComponents('Sprite');
@@ -13,16 +13,16 @@ export default class Puppeter {
 			
 			if(direction) {
 				if(direction.left) {
-					sprite.transformation.scaleX = -abs(sprite.transformation.scaleX);
+					sprite.transform.scaleX = -abs(sprite.transform.scaleX);
 				}
 				if(direction.right) {
-					sprite.transformation.scaleX = abs(sprite.transformation.scaleX);
+					sprite.transform.scaleX = abs(sprite.transform.scaleX);
 				}
 				if(direction.up) {
-					sprite.transformation.scaleY = -abs(sprite.transformation.scaleY);
+					sprite.transform.scaleY = -abs(sprite.transform.scaleY);
 				}
 				if(direction.down) {
-					sprite.transformation.scaleY = abs(sprite.transformation.scaleY);
+					sprite.transform.scaleY = abs(sprite.transform.scaleY);
 				}
 			}
 		}

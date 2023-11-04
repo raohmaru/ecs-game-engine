@@ -1,6 +1,6 @@
 export default {
-	width: 480,
-	height: 320,
+	width: 160,
+	height: 144,
 	scaleFactor: {
 		x: 2,
 		y: 2

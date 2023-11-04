@@ -1,4 +1,4 @@
-export default class Translate {
+export class Translate {
 	constructor(dx, dy, x = 0, y = 0) {
 		this.dx = dx;
 		this.dy = dy;

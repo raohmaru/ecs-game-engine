@@ -1,4 +1,4 @@
-export default class Director {
+export class Director {
 	constructor(game) {
 		this._game = game;
 		this._group = game.ecs.getEntitiesByComponents('Camera');

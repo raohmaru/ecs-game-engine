@@ -1,6 +1,6 @@
 import C, { keyCodes } from '../lib/core/const.js';
 
-export default class Keyboard {
+export class Keyboard {
 	constructor(game) {
 		game.input = game.input || {};
 		this._keyboard = game.input.keyboard = {};

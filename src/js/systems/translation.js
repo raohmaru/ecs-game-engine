@@ -1,4 +1,4 @@
-export default class Translation {
+export class Translation {
 	constructor(game) {
 		this._group = game.ecs.getEntitiesByComponents('Background', 'Translate');
 	}

@@ -5,7 +5,7 @@ const createPattern = (view, repetition) => {
 	return ctx.createPattern(view, repetition);
 }
 
-export default class Background extends Renderable {
+export class Background extends Renderable {
 	constructor({
 		view,
 		width,

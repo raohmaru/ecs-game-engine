@@ -1,23 +1,13 @@
-import cfg           from './config.js';
-import $             from './util/dom.js';
-import Game          from './lib/core/game.js';
-import Scene         from './lib/core/scene.js';
+import cfg   from './config.js';
+import $     from './util/dom.js';
+import Game  from './lib/core/game.js';
+import Scene from './lib/core/scene.js';
 
-import Movement      from './systems/movement.js';
-import Render        from './systems/render.js';
-import Translation   from './systems/translation.js';
-import Keyboard      from './systems/keyboard.js';
-import Director      from './systems/director.js';
-import Puppeteer     from './systems/puppeteer.js';
+import { Movement, Render, Translation, Keyboard, Director, Puppeteer }
+	from './systems/index.js';
 
-import Sprite        from './components/sprite.js';
-import Background    from './components/background.js';
-import Position      from './components/position.js';
-import Velocity      from './components/velocity.js';
-import Translate     from './components/translate.js';
-import Camera        from './components/camera.js';
-import Movable       from './components/movable.js';
-import Direction     from './components/direction.js';
+import { Sprite, Background, Position, Velocity, Translate, Camera, Movable, Direction }
+	from './components/index.js';
 
 // variables
 let game;
@@ -69,7 +59,7 @@ function init() {
 			new Movable(),
 			new Direction()
 		);
-	player.getComponent('Sprite').transformation.rotation = 45;
+	player.getComponent('Sprite').transform.rotation = 45;
 	scene0.addSprite(player, 1);
 	
 	const player50 = game.ecs
@@ -81,7 +71,7 @@ function init() {
 			new Movable(),
 			new Direction()
 		);
-	player50.getComponent('Sprite').transformation.scaleX = .5;
+	player50.getComponent('Sprite').transform.scaleX = .5;
 	scene0.addSprite(player50, 1);
 	
 	const player200 = game.ecs
@@ -93,7 +83,7 @@ function init() {
 			new Movable(),
 			new Direction()
 		);
-	player200.getComponent('Sprite').transformation.scaleX = 2;
+	player200.getComponent('Sprite').transform.scaleX = 2;
 	scene0.addSprite(player200, 1);
 	
 	const bg1 = game.ecs
@@ -163,10 +153,16 @@ function init() {
 
 function ready() {
 	game.start();
+
+	$('#btn').addEventListener('click', (e) => {
+		game.ecs.getEntity('player').removeComponents(['Movable']);
+	});
 }
 
 function render(delta) {
-	$statistics.textContent = 1000 / delta;
+	if (cfg.debug) {
+		$statistics.textContent = (1000 / delta).toFixed(2);
+	}
 }
 
 function createPlayerSprite() {

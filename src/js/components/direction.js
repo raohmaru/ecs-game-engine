@@ -1,4 +1,4 @@
-export default class Direction {
+export class Direction {
 	constructor() {
 		this.up = false;
 		this.right = false;

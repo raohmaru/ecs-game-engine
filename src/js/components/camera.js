@@ -1,6 +1,6 @@
 import Rectangle from '../lib/geom/rectangle.js';
 
-export default class Camera {
+export class Camera {
 	constructor(game, width = 0, height = 0, x = 0, y = 0) {
 		this.viewport = new Rectangle(
 			width || game.stage.width,

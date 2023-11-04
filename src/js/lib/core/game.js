@@ -51,7 +51,7 @@ export default class Game {
 	prepare() {
 		this._loader.start()
 			.complete.then(() => {
-				this._states.ready && this._states.ready();
+				this._states?.ready(this);
 			});
 	}
 	
@@ -61,7 +61,7 @@ export default class Game {
 
 	frame(delta) {
 		ecs.update(delta);
-		this._states.render && this._states.render(delta);
+		this._states?.render(delta);
 	}
 	
 	render() {
